@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --color-ink: #16081f;
+  --color-grape-950: #12051c;
+  --color-grape-900: #1f0832;
+  --color-grape-800: #2e0d4b;
+  --color-grape-700: #4a1670;
+  --color-grape-500: #8a2dbf;
+  --color-orchid: #c84fd8;
+  --color-paper: #fbf4ea;
+  --color-paper-2: #f2e6d4;
+  --color-gum-yellow: #ffd84a;
+  --color-gum-orange: #ff8a1f;
+  --color-gum-red: #e8344f;
+  --color-lime: #b8f53a;
+  --color-cream: #fff6e8;
+  --color-whatsapp: #25d366;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-display: var(--font-bricolage), ui-sans-serif, sans-serif;
+  --font-brand: var(--font-lilita), "Arial Rounded MT Bold", sans-serif;
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --animate-rise: rise 700ms var(--ease-out-strong) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+      filter: blur(6px);
+    }
   }
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  color-scheme: dark;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: clip;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: var(--color-gum-yellow);
+  color: var(--color-ink);
+}
+
+/* Espiral del logo, usada solo como acento detrás de la foto principal */
+.spiral {
+  background: repeating-radial-gradient(
+    circle at 50% 50%,
+    var(--color-grape-700) 0 22px,
+    var(--color-grape-500) 22px 30px,
+    var(--color-grape-800) 30px 52px
+  );
+  mask-image: radial-gradient(circle, #000 35%, transparent 70%);
+}
+
+/* Letras del logo: relleno degradado con borde amarillo, como en el original */
+.gum-text {
+  background: linear-gradient(180deg, var(--color-gum-orange) 15%, var(--color-gum-red) 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0.06em 0 var(--color-gum-yellow)) drop-shadow(0 -0.04em 0 var(--color-gum-yellow))
+    drop-shadow(0.05em 0 0 var(--color-gum-yellow)) drop-shadow(-0.05em 0 0 var(--color-gum-yellow));
+}
+
+/* Botón presionable: respuesta inmediata al toque */
+.pressable {
+  transition-property: transform, background-color, color, box-shadow;
+  transition-duration: 160ms;
+  transition-timing-function: var(--ease-out-strong);
+}
+.pressable:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
 }
